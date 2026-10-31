@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Визитка | Контакты</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* =========================================================
+       1. РАЗДЕЛ НАСТРОЕК ВНЕШНЕГО ВИДА И ФОНА
+       ========================================================= */
+    :root {
+      /* ВАРИАНТЫ ФОНА ВСЕЙ ВИЗИТКИ (раскомментируйте нужный): */
+      /* Вариант А (Темный строгий): */
+      --card-bg: #141414;
+      /* Вариант Б (Светлый): --card-bg: #f8f9fa; */
+      /* Вариант В (Фоновое изображение/текстура дерева, металла, ткани):
+         --card-bg: url('bg.jpg') center/cover no-repeat; */
+
+      /* ЦВЕТА ТЕКСТА И АКЦЕНТОВ */
+      --text-main: #ffffff;          /* Основной цвет текста (для темного фона - белый, для светлого - #111111) */
+      --text-sub: #d4af37;           /* Акцентный цвет (золото): должность, рамки */
+      --text-muted: #a0a0a0;         /* Второстепенный текст (компания, город) */
+
+      /* НАСТРОЙКА КНОПОК КОНТАКТОВ */
+      --btn-bg: #222222;             /* Фон плашек контактов */
+      --btn-text: #ffffff;           /* Цвет текста контактов */
+      --btn-icon-color: #d4af37;     /* Цвет иконок */
+
+      /* ТОЧНАЯ КАЛИБРОВКА ФОТО В КРУГЕ */
+      --photo-pos-x: 50%;            /* Смещение по горизонтали (0% - влево, 50% - центр, 100% - вправо) */
+      --photo-pos-y: 20%;            /* Смещение по вертикали (0% - вверх к макушке, 50% - центр, 100% - вниз) */
+      --photo-zoom: 100%;            /* Масштаб (100% - исходный, 120% - приблизить лицо) */
+
+      /* ТОЧНАЯ КАЛИБРОВКА ЛОГОТИПА В ОКОШКЕ */
+      --logo-box-bg: #d4af37;        /* Цвет плашки под логотипом */
+      --logo-scale: 80%;             /* Размер логотипа внутри окошка (в % от окна) */
+      --logo-pos-x: 50%;             /* Смещение логотипа влево/вправо (50% - центр) */
+      --logo-pos-y: 50%;             /* Смещение логотипа вверх/вниз (50% - центр) */
+    }
+
+    /* =========================================================
+       2. БАЗОВЫЕ СТИЛИ СТРАНИЦЫ
+       ========================================================= */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #0b0c10;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 12px;
+    }
+
+    /* Мобильный контейнер карточки */
+    .card-container {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card-bg);
+      border-radius: 24px;
+      overflow: hidden;
+      border: 2px solid var(--text-sub);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    /* Верхняя обложка (1/4 высоты) */
+    .cover-image {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Блок на границе обложки: круглое фото слева, логотип справа */
+    .identity-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      margin-top: -55px; /* Вылет элементов на обложку */
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Круг аватара */
+    .avatar-wrapper {
+      width: 105px;
+      height: 105px;
+      border-radius: 50%;
+      border: 3px solid var(--text-sub);
+      overflow: hidden;
+      background-color: #000;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: var(--photo-pos-x) var(--photo-pos-y);
+      transform: scale(var(--photo-zoom));
+      display: block;
+    }
+
+    /* Окошко логотипа */
+    .logo-box {
+      width: 110px;
+      height: 60px;
+      border-radius: 12px;
+      background-color: var(--logo-box-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      margin-top: 25px; /* Выравнивание по уровню */
+    }
+
+    .logo-img {
+      max-width: var(--logo-scale);
+      max-height: var(--logo-scale);
+      object-fit: contain;
+      transform: translate(calc(var(--logo-pos-x) - 50%), calc(var(--logo-pos-y) - 50%));
+      display: block;
+    }
+
+    /* Информация о человеке */
+    .profile-info {
+      padding: 16px 20px 10px;
+      text-align: left;
+    }
+
+    .person-name {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .person-role {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 3px;
+    }
+
+    .person-company {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Кнопки контактов */
+    .contacts-list {
+      padding: 10px 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 14px;
+      background: var(--btn-bg);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--btn-text);
+      font-size: 0.95rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background 0.2s ease;
+    }
+
+    .contact-item:active {
+      transform: scale(0.98);
+      background: rgba(212, 175, 55, 0.2);
+    }
+
+    .contact-icon {
+      width: 24px;
+      font-size: 1.1rem;
+      color: var(--btn-icon-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+    }
+
+    /* Большая кнопка сохранения контакта в записную книжку */
+    .save-vcard-btn {
+      margin-top: 6px;
+      background: var(--text-sub);
+      color: #000000;
+      font-weight: 700;
+      justify-content: center;
+      border: none;
+    }
+
+    .save-vcard-btn .contact-icon {
+      color: #000000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card-container">
+    <!-- 1. Верхняя обложка (1/4 высоты) -->
+    <img src="cover.jpg" alt="Cover" class="cover-image" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'">
+
+    <!-- 2. Блок фото и логотипа на стыке -->
+    <div class="identity-row">
+      <div class="avatar-wrapper">
+        <img src="photo.jpg" alt="Avatar" class="avatar-img" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'">
+      </div>
+      <div class="logo-box">
+        <img src="logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'; this.parentElement.innerText='LOGO';">
+      </div>
+    </div>
+
+    <!-- 3. Имя, должность, компания -->
+    <div class="profile-info">
+      <h1 class="person-name">Иван Иванов</h1>
+      <div class="person-role">Коммерческий директор</div>
+      <div class="person-company">Название компании OÜ</div>
+    </div>
+
+    <!-- 4. Кнопки контактов -->
+    <div class="contacts-list">
+      <a href="tel:+37200000000" class="contact-item">
+        <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+        <span>+372 0000 0000</span>
+      </a>
+
+      <a href="mailto:info@example.com" class="contact-item">
+        <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+        <span>info@example.com</span>
+      </a>
+
+      <a href="https://example.com" target="_blank" class="contact-item">
+        <div class="contact-icon"><i class="fa-solid fa-globe"></i></div>
+        <span>www.example.com</span>
+      </a>
+
+      <a href="https://wa.me/37200000000" target="_blank" class="contact-item">
+        <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
+        <span>WhatsApp</span>
+      </a>
+
+      <div class="contact-item" style="cursor: default;">
+        <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <span>Tallinn, Estonia</span>
+      </div>
+
+      <!-- Кнопка сохранения контакта -->
+      <a href="javascript:void(0)" onclick="downloadVCard()" class="contact-item save-vcard-btn">
+        <div class="contact-icon"><i class="fa-solid fa-address-card"></i></div>
+        <span>Сохранить в контакты</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 5. Скрипт автоматической генерации vCard без серверов -->
+  <script>
+    function downloadVCard() {
+      const vcardData = 
+`BEGIN:VCARD
+VERSION:3.0
+N:Иванов;Иван;;;
+FN:Иван Иванов
+ORG:Название компании OÜ
+TITLE:Коммерческий директор
+TEL;TYPE=CELL:+37200000000
+EMAIL:info@example.com
+URL:https://example.com
+ADR;TYPE=WORK:;;Tallinn;;;Estonia
+END:VCARD`;
+
+      const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const newLink = document.createElement('a');
+      newLink.download = 'contact.vcf';
+      newLink.href = url;
+      newLink.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+
+</body>
+</html>
