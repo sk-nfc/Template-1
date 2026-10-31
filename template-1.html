@@ -3,298 +3,222 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Визитка | Контакты</title>
+  <title>Визитка</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
+  <script>
+    /* ==============================================================
+       ПАНЕЛЬ УПРАВЛЕНИЯ ВИЗИТКОЙ (МЕНЯТЬ ДАННЫЕ ЗДЕСЬ)
+       ============================================================== */
+    const CONFIG = {
+      // 1. Текстовые данные владельца:
+      name:        "SERGEI KONIGIN",
+      title:       "CEO",
+      company:     "Vikseri Külmatehnika OÜ",
+      phone:       "+372 53463477",
+      email:       "sergei.k@vikseri.ee",
+      website:     "https://vikseri.ee",
+      whatsapp:    "37253463477",
+      location:    "Betooni 15, Tallinn, Estonia",
+
+      // 2. Имена загруженных файлов картинок:
+      coverImage:  "cover.jpg",
+      avatarImage: "photo.jpg",
+      logoImage:   "logo.jpg",       // Указан ваш загруженный файл logo.jpg
+
+      // 3. Фон визитки (цвет или текстура):
+      cardBackground: "#161616",
+
+      // 4. Калибровка фото и окошка логотипа:
+      photoOffsetY: "20%",           // Смещение лица по высоте (0% - вверх, 50% - центр)
+      photoZoom:    "100%",          // Масштаб фото в круге
+      logoBoxColor: "#d4af37",       // Цвет плашки под логотипом
+      logoScale:    "80%"            // Размер логотипа внутри плашки
+    };
+  </script>
+
   <style>
-    /* =========================================================
-       1. РАЗДЕЛ НАСТРОЕК ВНЕШНЕГО ВИДА И ФОНА
-       ========================================================= */
-    :root {
-      /* ВАРИАНТЫ ФОНА ВСЕЙ ВИЗИТКИ (раскомментируйте нужный): */
-      /* Вариант А (Темный строгий): */
-      --card-bg: #141414;
-      /* Вариант Б (Светлый): --card-bg: #f8f9fa; */
-      /* Вариант В (Фоновое изображение/текстура дерева, металла, ткани):
-         --card-bg: url('bg.jpg') center/cover no-repeat; */
-
-      /* ЦВЕТА ТЕКСТА И АКЦЕНТОВ */
-      --text-main: #ffffff;          /* Основной цвет текста (для темного фона - белый, для светлого - #111111) */
-      --text-sub: #d4af37;           /* Акцентный цвет (золото): должность, рамки */
-      --text-muted: #a0a0a0;         /* Второстепенный текст (компания, город) */
-
-      /* НАСТРОЙКА КНОПОК КОНТАКТОВ */
-      --btn-bg: #222222;             /* Фон плашек контактов */
-      --btn-text: #ffffff;           /* Цвет текста контактов */
-      --btn-icon-color: #d4af37;     /* Цвет иконок */
-
-      /* ТОЧНАЯ КАЛИБРОВКА ФОТО В КРУГЕ */
-      --photo-pos-x: 50%;            /* Смещение по горизонтали (0% - влево, 50% - центр, 100% - вправо) */
-      --photo-pos-y: 20%;            /* Смещение по вертикали (0% - вверх к макушке, 50% - центр, 100% - вниз) */
-      --photo-zoom: 100%;            /* Масштаб (100% - исходный, 120% - приблизить лицо) */
-
-      /* ТОЧНАЯ КАЛИБРОВКА ЛОГОТИПА В ОКОШКЕ */
-      --logo-box-bg: #d4af37;        /* Цвет плашки под логотипом */
-      --logo-scale: 80%;             /* Размер логотипа внутри окошка (в % от окна) */
-      --logo-pos-x: 50%;             /* Смещение логотипа влево/вправо (50% - центр) */
-      --logo-pos-y: 50%;             /* Смещение логотипа вверх/вниз (50% - центр) */
-    }
-
-    /* =========================================================
-       2. БАЗОВЫЕ СТИЛИ СТРАНИЦЫ
-       ========================================================= */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: #0b0c10;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       display: flex;
       justify-content: center;
       align-items: flex-start;
       min-height: 100vh;
       padding: 12px;
     }
-
-    /* Мобильный контейнер карточки */
     .card-container {
       width: 100%;
       max-width: 420px;
-      background: var(--card-bg);
       border-radius: 24px;
       overflow: hidden;
-      border: 2px solid var(--text-sub);
+      border: 2px solid #d4af37;
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-      position: relative;
+      color: #ffffff;
     }
-
-    /* Верхняя обложка (1/4 высоты) */
     .cover-image {
       width: 100%;
-      height: 150px;
+      height: 155px;
       object-fit: cover;
       display: block;
     }
-
-    /* Блок на границе обложки: круглое фото слева, логотип справа */
     .identity-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0 20px;
-      margin-top: -55px; /* Вылет элементов на обложку */
+      margin-top: -55px;
       position: relative;
       z-index: 2;
     }
-
-    /* Круг аватара */
     .avatar-wrapper {
       width: 105px;
       height: 105px;
       border-radius: 50%;
-      border: 3px solid var(--text-sub);
+      border: 3px solid #d4af37;
       overflow: hidden;
       background-color: #000;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
     }
-
     .avatar-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: var(--photo-pos-x) var(--photo-pos-y);
-      transform: scale(var(--photo-zoom));
       display: block;
     }
-
-    /* Окошко логотипа */
     .logo-box {
       width: 110px;
       height: 60px;
       border-radius: 12px;
-      background-color: var(--logo-box-bg);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-      margin-top: 25px; /* Выравнивание по уровню */
+      margin-top: 25px;
     }
-
     .logo-img {
-      max-width: var(--logo-scale);
-      max-height: var(--logo-scale);
       object-fit: contain;
-      transform: translate(calc(var(--logo-pos-x) - 50%), calc(var(--logo-pos-y) - 50%));
       display: block;
     }
-
-    /* Информация о человеке */
-    .profile-info {
-      padding: 16px 20px 10px;
-      text-align: left;
-    }
-
-    .person-name {
-      font-size: 1.45rem;
-      font-weight: 700;
-      color: var(--text-main);
-      letter-spacing: 0.5px;
-      margin-bottom: 4px;
-    }
-
-    .person-role {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-sub);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 3px;
-    }
-
-    .person-company {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    /* Кнопки контактов */
-    .contacts-list {
-      padding: 10px 20px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
+    .profile-info { padding: 16px 20px 10px; }
+    .person-name { font-size: 1.45rem; font-weight: 700; margin-bottom: 4px; }
+    .person-role { font-size: 0.95rem; font-weight: 600; color: #d4af37; text-transform: uppercase; margin-bottom: 3px; }
+    .person-company { font-size: 0.9rem; color: #a0a0a0; }
+    .contacts-list { padding: 10px 20px 24px; display: flex; flex-direction: column; gap: 10px; }
     .contact-item {
       display: flex;
       align-items: center;
       padding: 12px 14px;
-      background: var(--btn-bg);
+      background: #222222;
       border-radius: 12px;
       text-decoration: none;
-      color: var(--btn-text);
+      color: #ffffff;
       font-size: 0.95rem;
       border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: background 0.2s ease;
     }
-
-    .contact-item:active {
-      transform: scale(0.98);
-      background: rgba(212, 175, 55, 0.2);
-    }
-
-    .contact-icon {
-      width: 24px;
-      font-size: 1.1rem;
-      color: var(--btn-icon-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 12px;
-    }
-
-    /* Большая кнопка сохранения контакта в записную книжку */
-    .save-vcard-btn {
-      margin-top: 6px;
-      background: var(--text-sub);
-      color: #000000;
-      font-weight: 700;
-      justify-content: center;
-      border: none;
-    }
-
-    .save-vcard-btn .contact-icon {
-      color: #000000;
-    }
+    .contact-icon { width: 24px; font-size: 1.1rem; color: #d4af37; margin-right: 12px; }
+    .save-vcard-btn { background: #d4af37; color: #000000; font-weight: 700; justify-content: center; border: none; cursor: pointer; }
+    .save-vcard-btn .contact-icon { color: #000000; }
   </style>
 </head>
 <body>
 
-  <div class="card-container">
-    <!-- 1. Верхняя обложка (1/4 высоты) -->
-    <img src="cover.jpg" alt="Cover" class="cover-image" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'">
+  <div class="card-container" id="cardContainer">
+    <img id="coverEl" class="cover-image" src="" alt="Cover" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'">
 
-    <!-- 2. Блок фото и логотипа на стыке -->
     <div class="identity-row">
       <div class="avatar-wrapper">
-        <img src="photo.jpg" alt="Avatar" class="avatar-img" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'">
+        <img id="avatarEl" class="avatar-img" src="" alt="Avatar" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'">
       </div>
-      <div class="logo-box">
-        <img src="logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'; this.parentElement.innerText='LOGO';">
+      <div class="logo-box" id="logoBox">
+        <img id="logoEl" class="logo-img" src="" alt="Logo" onerror="this.style.display='none'; this.parentElement.innerText='LOGO';">
       </div>
     </div>
 
-    <!-- 3. Имя, должность, компания -->
     <div class="profile-info">
-      <h1 class="person-name">Иван Иванов</h1>
-      <div class="person-role">Коммерческий директор</div>
-      <div class="person-company">Название компании OÜ</div>
+      <h1 class="person-name" id="nameEl"></h1>
+      <div class="person-role" id="titleEl"></div>
+      <div class="person-company" id="companyEl"></div>
     </div>
 
-    <!-- 4. Кнопки контактов -->
     <div class="contacts-list">
-      <a href="tel:+37200000000" class="contact-item">
+      <a id="phoneLink" href="" class="contact-item">
         <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
-        <span>+372 0000 0000</span>
+        <span id="phoneText"></span>
       </a>
-
-      <a href="mailto:info@example.com" class="contact-item">
+      <a id="emailLink" href="" class="contact-item">
         <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
-        <span>info@example.com</span>
+        <span id="emailText"></span>
       </a>
-
-      <a href="https://example.com" target="_blank" class="contact-item">
+      <a id="webLink" href="" target="_blank" class="contact-item">
         <div class="contact-icon"><i class="fa-solid fa-globe"></i></div>
-        <span>www.example.com</span>
+        <span id="webText"></span>
       </a>
-
-      <a href="https://wa.me/37200000000" target="_blank" class="contact-item">
+      <a id="waLink" href="" target="_blank" class="contact-item">
         <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
         <span>WhatsApp</span>
       </a>
-
       <div class="contact-item" style="cursor: default;">
         <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
-        <span>Tallinn, Estonia</span>
+        <span id="locText"></span>
       </div>
-
-      <!-- Кнопка сохранения контакта -->
-      <a href="javascript:void(0)" onclick="downloadVCard()" class="contact-item save-vcard-btn">
+      <button onclick="downloadVCard()" class="contact-item save-vcard-btn">
         <div class="contact-icon"><i class="fa-solid fa-address-card"></i></div>
         <span>Сохранить в контакты</span>
-      </a>
+      </button>
     </div>
   </div>
 
-  <!-- 5. Скрипт автоматической генерации vCard без серверов -->
   <script>
+    document.getElementById('cardContainer').style.background = CONFIG.cardBackground;
+    document.getElementById('coverEl').src = CONFIG.coverImage;
+    
+    const avatar = document.getElementById('avatarEl');
+    avatar.src = CONFIG.avatarImage;
+    avatar.style.objectPosition = `50% ${CONFIG.photoOffsetY}`;
+    avatar.style.transform = `scale(${CONFIG.photoZoom})`;
+
+    const logoBox = document.getElementById('logoBox');
+    logoBox.style.backgroundColor = CONFIG.logoBoxColor;
+    const logo = document.getElementById('logoEl');
+    logo.src = CONFIG.logoImage;
+    logo.style.maxWidth = CONFIG.logoScale;
+    logo.style.maxHeight = CONFIG.logoScale;
+
+    document.getElementById('nameEl').innerText = CONFIG.name;
+    document.getElementById('titleEl').innerText = CONFIG.title;
+    document.getElementById('companyEl').innerText = CONFIG.company;
+
+    document.getElementById('phoneLink').href = `tel:${CONFIG.phone.replace(/\\s+/g, '')}`;
+    document.getElementById('phoneText').innerText = CONFIG.phone;
+
+    document.getElementById('emailLink').href = `mailto:${CONFIG.email}`;
+    document.getElementById('emailText').innerText = CONFIG.email;
+
+    document.getElementById('webLink').href = CONFIG.website;
+    document.getElementById('webText').innerText = CONFIG.website.replace(/^https?:\\/\\//, '');
+
+    document.getElementById('waLink').href = `https://wa.me/${CONFIG.whatsapp.replace(/[^0-9]/g, '')}`;
+    document.getElementById('locText').innerText = CONFIG.location;
+
     function downloadVCard() {
-      const vcardData = 
+      const vcard = 
 `BEGIN:VCARD
 VERSION:3.0
-N:Иванов;Иван;;;
-FN:Иван Иванов
-ORG:Название компании OÜ
-TITLE:Коммерческий директор
-TEL;TYPE=CELL:+37200000000
-EMAIL:info@example.com
-URL:https://example.com
-ADR;TYPE=WORK:;;Tallinn;;;Estonia
+FN:${CONFIG.name}
+ORG:${CONFIG.company}
+TITLE:${CONFIG.title}
+TEL;TYPE=CELL:${CONFIG.phone}
+EMAIL:${CONFIG.email}
+URL:${CONFIG.website}
+ADR;TYPE=WORK:;;${CONFIG.location};;;
 END:VCARD`;
-
-      const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const newLink = document.createElement('a');
-      newLink.download = 'contact.vcf';
-      newLink.href = url;
-      newLink.click();
-      URL.revokeObjectURL(url);
+      const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+      const a = document.createElement('a');
+      a.download = `${CONFIG.name}.vcf`;
+      a.href = URL.createObjectURL(blob);
+      a.click();
     }
   </script>
-
 </body>
 </html>
