@@ -7,66 +7,69 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* ==========================================
-       НАСТРОЙКИ: ТЕКСТ И КАЛИБРОВКА КАРТИНОК
-       ========================================== */
     :root {
-      /* Фон карточки */
-      --card-bg: #141414;
-
-      /* Калибровка фото (если лицо не по центру):
-         0% - макушка, 50% - центр, 100% - подбородок */
+      --card-bg: #121212;
+      --cover-height: 190px;
+      
       --photo-y: 20%;
       --photo-zoom: 100%;
 
-      /* Окошко логотипа */
-      --logo-box-bg: #d4af37;
-      --logo-size: 80%;
+      --logo-box-bg: #1e1e1e;
+      --logo-border: rgba(255, 255, 255, 0.12);
+      --logo-size: 75%;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      background-color: #0b0c10;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #000000;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: flex-start;
       min-height: 100vh;
-      padding: 12px;
+      padding: 14px;
+      -webkit-font-smoothing: antialiased;
     }
+
     .card-container {
       width: 100%;
-      max-width: 420px;
+      max-width: 410px;
       background: var(--card-bg);
-      border-radius: 24px;
+      border-radius: 20px;
       overflow: hidden;
-      border: 2px solid #d4af37;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
       color: #ffffff;
     }
+
     .cover-image {
       width: 100%;
-      height: 155px;
+      height: var(--cover-height);
       object-fit: cover;
       display: block;
     }
+
     .identity-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-end;
       padding: 0 20px;
       margin-top: -55px;
       position: relative;
       z-index: 2;
     }
+
     .avatar-wrapper {
-      width: 105px;
-      height: 105px;
+      width: 110px;
+      height: 110px;
       border-radius: 50%;
-      border: 3px solid #d4af37;
+      border: 3px solid #121212;
       overflow: hidden;
-      background-color: #000;
+      background-color: #1a1a1a;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
     }
+
     .avatar-img {
       width: 100%;
       height: 100%;
@@ -75,51 +78,109 @@
       transform: scale(var(--photo-zoom));
       display: block;
     }
+
     .logo-box {
       width: 110px;
       height: 60px;
-      border-radius: 12px;
+      border-radius: 10px;
       background-color: var(--logo-box-bg);
+      border: 1px solid var(--logo-border);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      margin-top: 25px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      margin-bottom: 5px;
     }
+
     .logo-img {
       max-width: var(--logo-size);
       max-height: var(--logo-size);
       object-fit: contain;
       display: block;
     }
-    .profile-info { padding: 16px 20px 10px; }
-    .person-name { font-size: 1.45rem; font-weight: 700; margin-bottom: 4px; }
-    .person-role { font-size: 0.95rem; font-weight: 600; color: #d4af37; text-transform: uppercase; margin-bottom: 3px; }
-    .person-company { font-size: 0.9rem; color: #a0a0a0; }
-    .contacts-list { padding: 10px 20px 24px; display: flex; flex-direction: column; gap: 10px; }
+
+    /* ЕДИНЫЙ ЦВЕТ И ШРИФТ ДЛЯ БЛОКА ИМЕНИ */
+    .profile-info {
+      padding: 18px 20px 8px;
+    }
+
+    .person-name {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+      margin-bottom: 3px;
+    }
+
+    .person-role {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #ffffff;
+      margin-bottom: 3px;
+    }
+
+    .person-company {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #ffffff;
+    }
+
+    /* Кнопки контактов */
+    .contacts-list {
+      padding: 12px 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
     .contact-item {
       display: flex;
       align-items: center;
-      padding: 12px 14px;
-      background: #222222;
+      padding: 13px 16px;
+      background: #1c1c1e;
       border-radius: 12px;
       text-decoration: none;
       color: #ffffff;
       font-size: 0.95rem;
       border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background 0.15s ease;
     }
-    .contact-icon { width: 24px; font-size: 1.1rem; color: #d4af37; margin-right: 12px; }
-    .save-vcard-btn { background: #d4af37; color: #000000; font-weight: 700; justify-content: center; border: none; cursor: pointer; }
-    .save-vcard-btn .contact-icon { color: #000000; }
+
+    .contact-item:active {
+      background: #2c2c2e;
+    }
+
+    .contact-icon {
+      width: 24px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      margin-right: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .save-vcard-btn {
+      margin-top: 6px;
+      background: #ffffff;
+      color: #000000;
+      font-weight: 600;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+    }
+
+    .save-vcard-btn .contact-icon {
+      color: #000000;
+    }
   </style>
 </head>
 <body>
 
   <div class="card-container">
-    <!-- 1. Ваша обложка -->
     <img src="cover.jpg" alt="Обложка" class="cover-image">
 
-    <!-- 2. Ваше фото и логотип -->
     <div class="identity-row">
       <div class="avatar-wrapper">
         <img src="photo.jpg" alt="Фото" class="avatar-img">
@@ -129,14 +190,14 @@
       </div>
     </div>
 
-    <!-- 3. Ваши данные -->
+    <!-- БЛОК ИНФОРМАЦИИ: ОДИН ЦВЕТ, ОДИН ШРИФТ -->
     <div class="profile-info">
       <h1 class="person-name">Сергей</h1>
       <div class="person-role">Руководитель</div>
       <div class="person-company">Vikseri Külmatehnika OÜ</div>
     </div>
 
-    <!-- 4. Кнопки контактов -->
+    <!-- КНОПКИ СВЯЗИ -->
     <div class="contacts-list">
       <a href="tel:+37200000000" class="contact-item">
         <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
@@ -192,4 +253,3 @@ END:VCARD`;
   </script>
 </body>
 </html>
-    
