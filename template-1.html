@@ -11,8 +11,9 @@
       --card-bg: #121212;
       --cover-height: 190px;
       
-      --photo-y: 20%;
-      --photo-zoom: 100%;
+      /* НАСТРОЙКА ФОТО В КРУГЕ */
+      --photo-y: 20%;              /* Положение по высоте (0% вверх, 50% центр) */
+      --photo-zoom: 90%;           /* Меньше 100% = отдалить лицо (лицо становится меньше) */
 
       --logo-box-bg: #1e1e1e;
       --logo-border: rgba(255, 255, 255, 0.12);
@@ -100,7 +101,7 @@
       display: block;
     }
 
-    /* ЕДИНЫЙ ЦВЕТ И ШРИФТ ДЛЯ БЛОКА ИМЕНИ */
+    /* БЛОК ИМЕНИ: УВЕЛИЧЕННЫЙ РАЗМЕР ДОЛЖНОСТИ И ФИРМЫ */
     .profile-info {
       padding: 18px 20px 8px;
     }
@@ -110,18 +111,18 @@
       font-weight: 600;
       color: #ffffff;
       letter-spacing: -0.01em;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
 
     .person-role {
-      font-size: 0.95rem;
+      font-size: 1.05rem;          /* Увеличено */
       font-weight: 400;
       color: #ffffff;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
 
     .person-company {
-      font-size: 0.95rem;
+      font-size: 1.05rem;          /* Увеличено */
       font-weight: 400;
       color: #ffffff;
     }
@@ -190,14 +191,12 @@
       </div>
     </div>
 
-    <!-- БЛОК ИНФОРМАЦИИ: ОДИН ЦВЕТ, ОДИН ШРИФТ -->
     <div class="profile-info">
       <h1 class="person-name">Сергей</h1>
       <div class="person-role">Руководитель</div>
       <div class="person-company">Vikseri Külmatehnika OÜ</div>
     </div>
 
-    <!-- КНОПКИ СВЯЗИ -->
     <div class="contacts-list">
       <a href="tel:+37200000000" class="contact-item">
         <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
