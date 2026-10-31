@@ -1,4 +1,4 @@
-I<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -6,38 +6,24 @@ I<!DOCTYPE html>
   <title>Визитка</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <script>
-    /* ==============================================================
-       ПАНЕЛЬ УПРАВЛЕНИЯ ВИЗИТКОЙ (МЕНЯТЬ ДАННЫЕ ЗДЕСЬ)
-       ============================================================== */
-    const CONFIG = {
-      // 1. Текстовые данные владельца:
-      name:        "SERGEI KONIGIN",
-      title:       "CEO",
-      company:     "VIKSERI KULMATEHNIKA OÜ",
-      phone:       "+372 53463477",
-      email:       "sergei.k@vikseri.ee",
-      website:     "https://vikseri.ee",
-      whatsapp:    "37253463477",
-      location:    "Betooni 15, Tallinn, Estonia",
-
-      // 2. Имена загруженных файлов картинок:
-      coverImage:  "./cover.jpg",
-      avatarImage: "./photo.jpg",
-      logoImage:   "./logo.jpg",       // Указан ваш загруженный файл logo.jpg
-
-      // 3. Фон визитки (цвет или текстура):
-      cardBackground: "#161616",
-
-      // 4. Калибровка фото и окошка логотипа:
-      photoOffsetY: "20%",           // Смещение лица по высоте (0% - вверх, 50% - центр)
-      photoZoom:    "100%",          // Масштаб фото в круге
-      logoBoxColor: "#d4af37",       // Цвет плашки под логотипом
-      logoScale:    "80%"            // Размер логотипа внутри плашки
-    };
-  </script>
-
   <style>
+    /* ==========================================
+       НАСТРОЙКИ: ТЕКСТ И КАЛИБРОВКА КАРТИНОК
+       ========================================== */
+    :root {
+      /* Фон карточки */
+      --card-bg: #141414;
+
+      /* Калибровка фото (если лицо не по центру):
+         0% - макушка, 50% - центр, 100% - подбородок */
+      --photo-y: 20%;
+      --photo-zoom: 100%;
+
+      /* Окошко логотипа */
+      --logo-box-bg: #d4af37;
+      --logo-size: 80%;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: #0b0c10;
@@ -51,6 +37,7 @@ I<!DOCTYPE html>
     .card-container {
       width: 100%;
       max-width: 420px;
+      background: var(--card-bg);
       border-radius: 24px;
       overflow: hidden;
       border: 2px solid #d4af37;
@@ -84,12 +71,15 @@ I<!DOCTYPE html>
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center var(--photo-y);
+      transform: scale(var(--photo-zoom));
       display: block;
     }
     .logo-box {
       width: 110px;
       height: 60px;
       border-radius: 12px;
+      background-color: var(--logo-box-bg);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -97,6 +87,8 @@ I<!DOCTYPE html>
       margin-top: 25px;
     }
     .logo-img {
+      max-width: var(--logo-size);
+      max-height: var(--logo-size);
       object-fit: contain;
       display: block;
     }
@@ -123,45 +115,54 @@ I<!DOCTYPE html>
 </head>
 <body>
 
-  <div class="card-container" id="cardContainer">
-    <img id="coverEl" class="cover-image" src="" alt="Cover" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'">
+  <div class="card-container">
+    <!-- 1. Ваша обложка -->
+    <img src="cover.jpg" alt="Обложка" class="cover-image">
 
+    <!-- 2. Ваше фото и логотип -->
     <div class="identity-row">
       <div class="avatar-wrapper">
-        <img id="avatarEl" class="avatar-img" src="" alt="Avatar" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'">
+        <img src="photo.jpg" alt="Фото" class="avatar-img">
       </div>
-      <div class="logo-box" id="logoBox">
-        <img id="logoEl" class="logo-img" src="" alt="Logo" onerror="this.style.display='none'; this.parentElement.innerText='LOGO';">
+      <div class="logo-box">
+        <img src="logo.jpg" alt="Логотип" class="logo-img">
       </div>
     </div>
 
+    <!-- 3. Ваши данные -->
     <div class="profile-info">
-      <h1 class="person-name" id="nameEl"></h1>
-      <div class="person-role" id="titleEl"></div>
-      <div class="person-company" id="companyEl"></div>
+      <h1 class="person-name">Сергей</h1>
+      <div class="person-role">Руководитель</div>
+      <div class="person-company">Vikseri Külmatehnika OÜ</div>
     </div>
 
+    <!-- 4. Кнопки контактов -->
     <div class="contacts-list">
-      <a id="phoneLink" href="" class="contact-item">
+      <a href="tel:+37200000000" class="contact-item">
         <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
-        <span id="phoneText"></span>
+        <span>+372 0000 0000</span>
       </a>
-      <a id="emailLink" href="" class="contact-item">
+
+      <a href="mailto:info@vikseri.ee" class="contact-item">
         <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
-        <span id="emailText"></span>
+        <span>info@vikseri.ee</span>
       </a>
-      <a id="webLink" href="" target="_blank" class="contact-item">
+
+      <a href="https://vikseri.ee" target="_blank" class="contact-item">
         <div class="contact-icon"><i class="fa-solid fa-globe"></i></div>
-        <span id="webText"></span>
+        <span>vikseri.ee</span>
       </a>
-      <a id="waLink" href="" target="_blank" class="contact-item">
+
+      <a href="https://wa.me/37200000000" target="_blank" class="contact-item">
         <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
         <span>WhatsApp</span>
       </a>
+
       <div class="contact-item" style="cursor: default;">
         <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
-        <span id="locText"></span>
+        <span>Tallinn, Estonia</span>
       </div>
+
       <button onclick="downloadVCard()" class="contact-item save-vcard-btn">
         <div class="contact-icon"><i class="fa-solid fa-address-card"></i></div>
         <span>Сохранить в контакты</span>
@@ -170,55 +171,25 @@ I<!DOCTYPE html>
   </div>
 
   <script>
-    document.getElementById('cardContainer').style.background = CONFIG.cardBackground;
-    document.getElementById('coverEl').src = CONFIG.coverImage;
-    
-    const avatar = document.getElementById('avatarEl');
-    avatar.src = CONFIG.avatarImage;
-    avatar.style.objectPosition = `50% ${CONFIG.photoOffsetY}`;
-    avatar.style.transform = `scale(${CONFIG.photoZoom})`;
-
-    const logoBox = document.getElementById('logoBox');
-    logoBox.style.backgroundColor = CONFIG.logoBoxColor;
-    const logo = document.getElementById('logoEl');
-    logo.src = CONFIG.logoImage;
-    logo.style.maxWidth = CONFIG.logoScale;
-    logo.style.maxHeight = CONFIG.logoScale;
-
-    document.getElementById('nameEl').innerText = CONFIG.name;
-    document.getElementById('titleEl').innerText = CONFIG.title;
-    document.getElementById('companyEl').innerText = CONFIG.company;
-
-    document.getElementById('phoneLink').href = `tel:${CONFIG.phone.replace(/\\s+/g, '')}`;
-    document.getElementById('phoneText').innerText = CONFIG.phone;
-
-    document.getElementById('emailLink').href = `mailto:${CONFIG.email}`;
-    document.getElementById('emailText').innerText = CONFIG.email;
-
-    document.getElementById('webLink').href = CONFIG.website;
-    document.getElementById('webText').innerText = CONFIG.website.replace(/^https?:\\/\\//, '');
-
-    document.getElementById('waLink').href = `https://wa.me/${CONFIG.whatsapp.replace(/[^0-9]/g, '')}`;
-    document.getElementById('locText').innerText = CONFIG.location;
-
     function downloadVCard() {
       const vcard = 
 `BEGIN:VCARD
 VERSION:3.0
-FN:${CONFIG.name}
-ORG:${CONFIG.company}
-TITLE:${CONFIG.title}
-TEL;TYPE=CELL:${CONFIG.phone}
-EMAIL:${CONFIG.email}
-URL:${CONFIG.website}
-ADR;TYPE=WORK:;;${CONFIG.location};;;
+FN:Сергей
+ORG:Vikseri Külmatehnika OÜ
+TITLE:Руководитель
+TEL;TYPE=CELL:+37200000000
+EMAIL:info@vikseri.ee
+URL:https://vikseri.ee
+ADR;TYPE=WORK:;;Tallinn, Estonia;;;
 END:VCARD`;
       const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
       const a = document.createElement('a');
-      a.download = `${CONFIG.name}.vcf`;
+      a.download = `Сергей.vcf`;
       a.href = URL.createObjectURL(blob);
       a.click();
     }
   </script>
 </body>
 </html>
+    
